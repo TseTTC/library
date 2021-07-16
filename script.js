@@ -5,8 +5,8 @@ let library = [
         status:"Read"
     },
     {
-        name:"Rich Dad Poor Dad",
-        author:"Robert Kiyosaki",
+        name:"To Kill a Mockingbird",
+        author:"Harper Lee",
         status:"Not Read"
     },
     {
@@ -46,17 +46,29 @@ function addBookToLibrary(){
 function toTable(){
     library.forEach(info =>{
         const UPDATE = `
-            <tr>
+            <tr data-name = ${info.name}>
                 <td>${info.name}</td>
                 <td>${info.author}</td>
-                <td><button id="read" class="status" onclick="readSwitch()">${info.status}</button></td>
-                <td><button class="delete btn">Delete</button></td>
+                <td><button class="status" id = "${info.status}-${info.name}" onclick="readSwitch(this.id)">${info.status}</button></td>
+                <td><button class="delete btn" onclick = "deleteBook(this)">Delete</button></td>
             </tr>
         `
     TABLE.insertAdjacentHTML('afterbegin',UPDATE);
     })
 }
-function readSwitch(book) {
-    
+function readSwitch(a) {
+    let status = document.getElementById(a)
+    console.log(status)
+    if (status.innerHTML == "Read"){
+        status.innerHTML = "Not Read"
+    } else {
+        status.innerHTML = "Read"
+    }
 }
+
+function deleteBook(e) {
+    console.log(e)
+    e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode)
+}
+
 toTable()
